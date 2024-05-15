@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Product Details
+{% endblock %}
+
+{% block body %}
+<div class="container-col-12">
+    <div class="row">
+        <div class="col-md-6">
+            <img  src="{{object.prod_image.url}}" alt="{{object.prod_name}}" >
+        </div>
+        <div class="col-md-6">
+            
+            <div class="col-md-4">
+              <div class="card mt-2" style="width: 18rem; height: 450px;">
+                <div class="card-body">
+                  <h5 class="card-title">{{object.prod_name}}</h5>
+                  <p class="card-text">{{object.prod_desc}}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">Price:  ₹{{object.prod_price}}</li>
+                  
+                </ul>
+                <div class="card-body">
+                  <a href="{% url 'cart' object.prod_id %}" class="card-link btn btn-warning">Add to Cart</a>
+                  <a href="{% url 'buy_now' object.prod_id %}" class="card-link btn btn-primary">Buy Now</a>
+                </div>
+      
+              </div>
+            </div>
+          
+        </div>
+    </div>
+</div>
+{% endblock %}

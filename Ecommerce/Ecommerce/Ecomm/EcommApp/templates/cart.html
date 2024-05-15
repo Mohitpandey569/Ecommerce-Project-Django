@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Cart
+{% endblock %}
+
+{% block body %}
+<!--Cart-->
+<div class="row">
+    <div class="col-md-9 p-2 ml-1">
+        <h4 class="bg-danger text-white m-2">Customer Details</h4>
+        <hr>
+        <p>
+            <b>Name:</b>&nbsp; {{user.username}}
+        </p>
+
+        <p>
+            <b>Mobile:</b>&nbsp; 9876543219 
+        </p>
+
+        <p>
+            <b>Email:</b>&nbsp; {{user.email}} 
+        </p>
+
+        <h4 class="bg-danger text-white m-2">Cart Details</h4>
+        <hr>
+        {% for x in products %}
+        <div class="row">
+            <div class="col-md-4 mt-4 mb-4">
+                <img height="250" width="250" src="{{x.product.prod_image.url}}" alt="image">
+            </div>
+
+            <div class="col-md-8 mt-4">
+                <p>
+                    <b>Product Name:</b>&nbsp;{{x.product.prod_name}} 
+                </p>
+                <p>
+                    <b>Product Category:</b>&nbsp;{{x.product.prod_category}}
+                </p>
+                <p>
+                    <b>Product Price:</b>&nbsp;{{x.product.prod_price}}
+                </p>
+                <p>
+                    <b>Quantity:</b>
+                    <a href="{% url 'update_qty' 0 x.product.prod_id %}"><button class="btn btn-info">-</button></a>
+                    <input readonly="readonly" type="number" name="qty" value="{{x.quantity}}" style="width: 70px;">
+                    <a href="{% url 'update_qty' 1 x.product.prod_id %}"><button class="btn btn-info">+</button></a>
+
+                </p>
+                <div>
+                    <a href="{% url 'deleteCart' x.product.prod_id %}" class="card-link btn btn-danger">Remove</a>
+                    
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        
+    </div>
+    
+    <div class="col-md-3 mt-3">
+        <h4 class="bg-danger text-white">Total</h4>
+        <hr>
+        <p>
+            <b>Total Items:</b>&nbsp;{{products|length}}
+        </p>
+        <p>
+            <b>Total Price:</b>&nbsp;Rs. {{cost}}
+        </p>
+        <div>
+            <a href="{% url 'placeOrders' %}" class="card-link btn btn-warning">Place Order</a>
+            <a href="{% url 'home' %}" class="card-link btn btn-danger">Shop More</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

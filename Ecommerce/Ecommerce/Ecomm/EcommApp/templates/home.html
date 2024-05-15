@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block body %}
+<div class="row">
+  <div class="col-md-3">
+
+    <h4>Filter By Category</h4>
+    <a href="{% url 'home' %}">ALL</a><br>
+    <a href="{% url 'mf' %}">Mobile</a><br>
+    <a href="{% url 'lf' %}">Laptop</a><br>
+    <a href="{% url 'tf' %}">Tv</a>
+    <hr>
+    <h4>Filter By Price</h4>
+    <br>
+    <form method="post" action="{% url 'rf' %}">
+      {% csrf_token %} 
+      <div class="mb-3">
+        <label for="minInput" class="form-label">MIN</label>
+        <input type="number" class="form-control" name="minInput" id="minInput" aria-describedby="emailHelp">
+      </div>
+      <div class="mb-3">
+        <label for="maxInput" class="form-label">MAX</label>
+        <input type="number" class="form-control" id="maxInput" name="maxInput">
+      </div>
+      <button type="submit" class="btn btn-warning">Filter</button>
+    </form>
+    <br>
+    <h4 class="text-danger">{{msg}}</h4>
+    <hr>
+    <h4>Sort By Price</h4>
+    <br>
+    <p>
+      <a href="{% url 'sort' %}?sort=high_to_low">High-Low</a><br>
+      <a href="{% url 'sort' %}?sort=low_to_high">Low-High</a>
+    </p>
+
+    <hr>
+
+  </div>
+  <div class="col-md-9">
+    <div class="row m-2">
+      {% for x in products %}
+      <div class="col-md-4">
+        <div class="card mt-2" style="width: 18rem; height: 450px;">
+          <img src="{{x.prod_image.url}}" class="card-img-top" height="200px" alt="..." style="object-fit: contain;" >
+          <div class="card-body">
+            <h5 class="card-title">{{x.prod_name}}</h5>
+            
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Price:  ₹{{x.prod_price}}</li>
+            
+          </ul>
+          
+          <div class="card-body">
+            <a href="{% url 'cart' x.prod_id %}" class="card-link btn btn-warning">Add to Cart</a>
+            <a href="{% url 'prod_details' x.pk %}" class="card-link btn btn-primary">View</a>
+          </div>
+
+        </div>
+      </div>
+      {% empty %}
+      <h2>Products Not Available</h2>
+      {% endfor %}
+     
+      {% endblock %}

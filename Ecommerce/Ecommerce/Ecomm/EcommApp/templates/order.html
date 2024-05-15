@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Cart
+{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-9 p-2 ml-1">
+        <h4 class="bg-danger text-white m-2">My Orders</h4>
+        <hr>
+        {% for x in products %}
+        <div class="row">
+            <div class="col-md-4 mt-4 mb-4">
+                <img height="250" width="250" src="{{x.product.prod_image.url}}" alt="image">
+            </div>
+
+            <div class="col-md-8 mt-4">
+                <p><b>Product Name:</b>{{x.product.order_id}} </p>
+                <p><b>Product Name:</b>{{x.product.prod_name}} </p>
+                <p><b>Product Category:</b>{{x.product.prod_category}}</p>
+                <p><b>Product Price:</b>{{x.product.prod_price}}</p>
+                <p><b>Quantity:</b>{{x.quantity}}</p>
+                <a href="{% url 'addCart' x.product.prod_id %}" class="btn btn-danger" >Re-Order</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
